@@ -22,7 +22,7 @@ abstract class Runnable
     {
         if (is_callable($this->closure)) {
             // Set the error handler for the spec
-            set_error_handler([$this, 'handleError'], E_ALL);
+            set_error_handler(array($this, 'handleError'), E_ALL);
 
             // Invoke the closure while catching exceptions
             try {

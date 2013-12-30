@@ -32,7 +32,7 @@ abstract class AbstractReporter
         $this->formatter = $console->formatter;
         $this->startTime = microtime(true);
         $this->specCount = 0;
-        $this->failedSpecs = [];
+        $this->failedSpecs = array();
     }
 
     /**
@@ -128,22 +128,22 @@ abstract class AbstractReporter
      */
     private function drawAscii()
     {
-        $fail = [
+        $fail = array(
             '(╯°□°）╯︵ ┻━┻',
             '¯\_(ツ)_/¯',
             '┻━┻︵ \(°□°)/ ︵ ┻━┻',
             '(ಠ_ಠ)',
             '(ノಠ益ಠ)ノ彡',
             '(✖﹏✖)'
-        ];
+        );
 
-        $pass = [
+        $pass = array(
             '☜(ﾟヮﾟ☜)',
             '♪ヽ( ⌒o⌒)人(⌒-⌒ )v ♪',
             '┗(^-^)┓',
             'ヽ(^。^)ノ',
             'ヽ(^▽^)v'
-        ];
+        );
 
         if (count($this->failedSpecs)) {
             $key = array_rand($fail, 1);

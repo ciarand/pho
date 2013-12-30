@@ -18,15 +18,15 @@ class Console
 
     private $errorStatus;
 
-    private $availableOptions = [
-        'ascii'     => ['--ascii',     '-a', 'Show ASCII art on completion'],
-        'help'      => ['--help',      '-h', 'Output usage information'],
-        'filter'    => ['--filter',    '-f', 'Run specs containing a pattern', 'pattern'],
-        'reporter'  => ['--reporter',  '-r', 'Specify the reporter to use', 'name'],
-        'stop'      => ['--stop',      '-s', 'Stop on failure'],
-        'version'   => ['--version',   '-v', 'Display version number'],
-        'watch'     => ['--watch',     '-w', 'Watch files for changes and rerun specs'],
-        'namespace' => ['--namespace', '-n', 'Only use namespaced functions'],
+    private $availableOptions = array(
+        'ascii'     => array('--ascii',     '-a', 'Show ASCII art on completion'),
+        'help'      => array('--help',      '-h', 'Output usage information'),
+        'filter'    => array('--filter',    '-f', 'Run specs containing a pattern', 'pattern'),
+        'reporter'  => array('--reporter',  '-r', 'Specify the reporter to use', 'name'),
+        'stop'      => array('--stop',      '-s', 'Stop on failure'),
+        'version'   => array('--version',   '-v', 'Display version number'),
+        'watch'     => array('--watch',     '-w', 'Watch files for changes and rerun specs'),
+        'namespace' => array('--namespace', '-n', 'Only use namespaced functions'),
 
         // TODO: Implement options below
         // 'no-color'  => ['--no-color',  '-n', 'Disable terminal colors'],
@@ -34,11 +34,11 @@ class Console
         // 'bootstrap' => ['--bootstrap', '-b', 'Bootstrap file to load', 'bootstrap'],
         // 'processes' => ['--processes', '-p', 'Number of processes to use', 'processes'],
         // 'verbose'   => ['--verbose',   '-V', 'Enable verbose output']
-    ];
+    );
 
-    private $reporters = ['dot', 'spec', 'list'];
+    private $reporters = array('dot', 'spec', 'list');
 
-    private $defaultDirs = ['test', 'spec'];
+    private $defaultDirs = array('test', 'spec');
 
     private $stream;
 
@@ -53,8 +53,8 @@ class Console
     public function __construct($arguments, $stream)
     {
         $this->arguments = $arguments;
-        $this->options = [];
-        $this->paths = [];
+        $this->options = array();
+        $this->paths = array();
         $this->stream = fopen($stream, 'w');
 
         $this->formatter = new ConsoleFormatter();
@@ -192,9 +192,9 @@ class Console
 
         // Loop over availableOptions, building the necessary input for
         // ConsoleFormatter::alignText()
-        $options = [];
+        $options = array();
         foreach ($this->availableOptions as $name => $optionInfo) {
-            $row = [$optionInfo[1], $optionInfo[0]];
+            $row = array($optionInfo[1], $optionInfo[0]);
             $row[] = (isset($optionInfo[3])) ? "<{$optionInfo[3]}>" : '';
             $row[] = $optionInfo[2];
 

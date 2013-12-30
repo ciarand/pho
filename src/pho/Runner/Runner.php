@@ -16,7 +16,7 @@ class Runner
 
     private $reporter;
 
-    private $suites = [];
+    private $suites = array();
 
     private $current;
 
@@ -156,10 +156,10 @@ class Runner
 
         $watcher->addListener(function() {
             $paths = implode(' ', self::$console->getPaths());
-            $descriptor = [
-                0 => ['pipe', 'r'],
-                1 => ['pipe', 'w']
-            ];
+            $descriptor = array(
+                0 => array('pipe', 'r'),
+                1 => array('pipe', 'w')
+            );
 
             // Rebuild option string, without watch
             $optionString = '';
