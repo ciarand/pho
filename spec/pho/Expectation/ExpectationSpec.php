@@ -133,14 +133,14 @@ describe('Expectation', function() {
     context('toBe', function() {
         it('returns if the value is strictly equal', function() {
             shouldReturn(function() {
-                $expect = new Expectation([]);
-                $expect->toBe([]);
+                $expect = new Expectation(array());
+                $expect->toBe(array());
             });
         });
 
         it('throws exception if not strictly equal', function() {
             shouldThrowException(function() {
-                $expect = new Expectation([]);
+                $expect = new Expectation(array());
                 $expect->toBe('');
             });
         });
@@ -149,15 +149,15 @@ describe('Expectation', function() {
     context('notToBe', function() {
         it('returns if the value is not strictly equal', function() {
             shouldReturn(function() {
-                $expect = new Expectation([]);
+                $expect = new Expectation(array());
                 $expect->notToBe('');
             });
         });
 
         it('throws exception if strictly equal', function() {
             shouldThrowException(function() {
-                $expect = new Expectation([]);
-                $expect->notToBe([]);
+                $expect = new Expectation(array());
+                $expect->notToBe(array());
             });
         });
     });
@@ -181,15 +181,15 @@ describe('Expectation', function() {
     context('notToEqual', function() {
         it('returns if the value is not strictly equal', function() {
             shouldReturn(function() {
-                $expect = new Expectation([]);
+                $expect = new Expectation(array());
                 $expect->notToEqual('');
             });
         });
 
         it('throws exception if strictly equal', function() {
             shouldThrowException(function() {
-                $expect = new Expectation([]);
-                $expect->notToEqual([]);
+                $expect = new Expectation(array());
+                $expect->notToEqual(array());
             });
         });
     });
@@ -325,14 +325,14 @@ describe('Expectation', function() {
     context('toBeEmpty', function() {
         it('returns if the length of an array is 0', function() {
             shouldReturn(function() {
-                $expect = new Expectation([]);
+                $expect = new Expectation(array());
                 $expect->toBeEmpty();
             });
         });
 
         it('throws exception if the length of an array is not 0', function() {
             shouldThrowException(function() {
-                $expect = new Expectation(['']);
+                $expect = new Expectation(array(''));
                 $expect->toBeEmpty();
             });
         });
@@ -355,14 +355,14 @@ describe('Expectation', function() {
     context('notToBeEmpty', function() {
         it('returns if the length of an array is not 0', function() {
             shouldReturn(function() {
-                $expect = new Expectation(['']);
+                $expect = new Expectation(array(''));
                 $expect->notToBeEmpty();
             });
         });
 
         it('throws exception if the length of an array is 0', function() {
             shouldThrowException(function() {
-                $expect = new Expectation([]);
+                $expect = new Expectation(array());
                 $expect->notToBeEmpty();
             });
         });
@@ -385,14 +385,14 @@ describe('Expectation', function() {
     context('toContain', function() {
         it('returns if the array contains the value', function() {
             shouldReturn(function() {
-                $expect = new Expectation(['test', 'spec']);
+                $expect = new Expectation(array('test', 'spec'));
                 $expect->toContain('spec');
             });
         });
 
         it('throws exception if the array does not contain the value', function() {
             shouldThrowException(function() {
-                $expect = new Expectation(['test', 'spec']);
+                $expect = new Expectation(array('test', 'spec'));
                 $expect->toContain('bdd');
             });
         });
@@ -415,14 +415,14 @@ describe('Expectation', function() {
     context('notToContain', function() {
         it('returns if the array does not contain the value', function() {
             shouldReturn(function() {
-                $expect = new Expectation(['test', 'spec']);
+                $expect = new Expectation(array('test', 'spec'));
                 $expect->notToContain('bdd');
             });
         });
 
         it('throws exception if the array contains the value', function() {
             shouldThrowException(function() {
-                $expect = new Expectation(['test', 'spec']);
+                $expect = new Expectation(array('test', 'spec'));
                 $expect->notToContain('spec');
             });
         });
@@ -799,14 +799,14 @@ describe('Expectation', function() {
     context('toHaveKey', function() {
         it('returns if the array has the key', function() {
             shouldReturn(function() {
-                $expect = new Expectation(['test' => 'value']);
+                $expect = new Expectation(array('test' => 'value'));
                 $expect->toHaveKey('test');
             });
         });
 
         it('throws exception if the array does not have the key', function() {
             shouldThrowException(function() {
-                $expect = new Expectation(['test' => 'value']);
+                $expect = new Expectation(array('test' => 'value'));
                 $expect->toHaveKey('invalid');
             });
         });
@@ -815,14 +815,14 @@ describe('Expectation', function() {
     context('notToHaveKey', function() {
         it('returns if the array does not have the key', function() {
             shouldReturn(function() {
-                $expect = new Expectation(['test' => 'value']);
+                $expect = new Expectation(array('test' => 'value'));
                 $expect->notToHaveKey('randomkey');
             });
         });
 
         it('throws exception if the array has the key', function() {
             shouldThrowException(function() {
-                $expect = new Expectation(['value']);
+                $expect = new Expectation(array('value'));
                 $expect->notToHaveKey(0);
             });
         });

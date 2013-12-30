@@ -29,14 +29,14 @@ describe('InclusionMatcher', function() {
 
         it('returns true if the value is in the array', function() {
             $matcher = new InclusionMatcher(2);
-            if (!$matcher->match([1, 2, 3])) {
+            if (!$matcher->match(array(1, 2, 3))) {
                 throw new \Exception('Does not return true');
             }
         });
 
         it('returns false if the value is not in the array', function() {
             $matcher = new InclusionMatcher(4);
-            if ($matcher->match([1, 2, 3])) {
+            if ($matcher->match(array(1, 2, 3))) {
                 throw new \Exception('Does not return false');
             }
         });

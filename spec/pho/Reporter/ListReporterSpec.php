@@ -8,7 +8,7 @@ use pho\Console\Console;
 
 describe('ListReporter', function() {
     before(function() {
-        $console = new Console([], 'php://output');
+        $console = new Console(array(), 'php://output');
         $console->parseArguments();
         $this->console = $console;
 

@@ -3,13 +3,13 @@
 use pho\Console\ConsoleOptionParser;
 
 describe('ConsoleOptionParser', function() {
-    $details = [
+    $details = array(
         'name'  => 'testName',
         'long'  => 'testLongName',
         'short' => 'testShortName',
         'desc'  => 'testDescription',
         'arg'   => 'testArgumentName'
-    ];
+    );
 
     context('addOption', function() use ($details) {
         it('creates a new option object', function() use ($details) {
@@ -53,10 +53,10 @@ describe('ConsoleOptionParser', function() {
             $parser->addOption('testName2', 'long2', 'short2', 'desc', 'arg');
 
             $options = $parser->getOptions();
-            expect($options)->toEqual([
+            expect($options)->toEqual(array(
                 'testName1' => false,
                 'testName2' => false
-            ]);
+            ));
         });
     });
 
@@ -73,61 +73,61 @@ describe('ConsoleOptionParser', function() {
             $parser = new ConsoleOptionParser();
             $addOptions($parser);
 
-            $parser->parseArguments(['--watch', '--ascii']);
+            $parser->parseArguments(array('--watch', '--ascii'));
             $options = $parser->getOptions();
 
-            expect($options)->toEqual([
+            expect($options)->toEqual(array(
                 'watch'    => true,
                 'ascii'    => true,
                 'reporter' => false,
                 'filter'   => false
-            ]);
+            ));
         });
 
         it('parses short names', function() use ($addOptions) {
             $parser = new ConsoleOptionParser();
             $addOptions($parser);
 
-            $parser->parseArguments(['-w']);
+            $parser->parseArguments(array('-w'));
             $options = $parser->getOptions();
 
-            expect($options)->toEqual([
+            expect($options)->toEqual(array(
                 'watch'    => true,
                 'ascii'    => false,
                 'reporter' => false,
                 'filter'   => false
-            ]);
+            ));
         });
 
         it('parses option arguments', function() use ($addOptions) {
             $parser = new ConsoleOptionParser();
             $addOptions($parser);
 
-            $parser->parseArguments(['-w', '--reporter', 'dot']);
+            $parser->parseArguments(array('-w', '--reporter', 'dot'));
             $options = $parser->getOptions();
 
-            expect($options)->toEqual([
+            expect($options)->toEqual(array(
                 'watch'    => true,
                 'ascii'    => false,
                 'reporter' => 'dot',
                 'filter'   => false
-            ]);
+            ));
         });
 
         it('stores invalid options', function() use ($addOptions) {
             $parser = new ConsoleOptionParser();
             $addOptions($parser);
 
-            $parser->parseArguments(['-w', '--invalidOpt']);
-            expect($parser->getInvalidArguments())->toEqual(['--invalidOpt']);
+            $parser->parseArguments(array('-w', '--invalidOpt'));
+            expect($parser->getInvalidArguments())->toEqual(array('--invalidOpt'));
         });
 
         it('stores paths', function() use ($addOptions) {
             $parser = new ConsoleOptionParser();
             $addOptions($parser);
 
-            $parser->parseArguments(['-r', 'spec', 'path/']);
-            expect($parser->getPaths())->toEqual(['path/']);
+            $parser->parseArguments(array('-r', 'spec', 'path/'));
+            expect($parser->getPaths())->toEqual(array('path/'));
         });
     });
 });

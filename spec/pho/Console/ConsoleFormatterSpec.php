@@ -7,25 +7,25 @@ describe('ConsoleFormatter', function() {
 
     context('alignText', function() use ($formatter) {
         it('pads strings to align columns', function() use ($formatter) {
-            $multiArray = [
-                ['pho', 'b', 'c'],
-                ['a', 'test']
-            ];
+            $multiArray = array(
+                array('pho', 'b', 'c'),
+                array('a', 'test')
+            );
 
-            $aligned = ['phob   c', 'a  test'];
+            $aligned = array('phob   c', 'a  test');
             expect($formatter->alignText($multiArray))->toEqual($aligned);
         });
 
         it('can use delimiters between columns', function() use ($formatter) {
-            $multiArray = [
-                ['pho', 'b', 'c'],
-                ['a', 'test']
-            ];
+            $multiArray = array(
+                array('pho', 'b', 'c'),
+                array('a', 'test')
+            );
 
-            $aligned = [
+            $aligned = array(
                 'pho | b    | c',
                 'a   | test'
-            ];
+            );
 
             expect($formatter->alignText($multiArray, ' | '))->toEqual($aligned);
         });
