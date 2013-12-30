@@ -15,9 +15,9 @@ class Watcher
      */
     public function __construct()
     {
-        $this->modifiedTimes = [];
-        $this->listeners = [];
-        $this->paths = [];
+        $this->modifiedTimes = array();
+        $this->listeners = array();
+        $this->paths = array();
     }
 
     /**
@@ -59,7 +59,8 @@ class Watcher
             // Loop over stored modified timestamps and compare them to their
             // current value
             foreach ($this->modifiedTimes as $path => $modifiedTime) {
-                if ($modifiedTime != stat($path)['mtime']) {
+                $stat = stat($path);
+                if ($modifiedTime != $stat['mtime']) {
                     $modified = true;
                     break;
                 }
@@ -69,7 +70,7 @@ class Watcher
                 $this->runListeners();
 
                 // Clear modified times and re-traverse paths
-                $this->modifiedTimes = [];
+                $this->modifiedTimes = array();
                 foreach ($this->paths as $path) {
                     $this->addModifiedTimes($path);
                 }

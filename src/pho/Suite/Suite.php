@@ -33,9 +33,9 @@ class Suite
     {
         $this->title = $title;
         $this->closure = $closure->bindTo($this);
-        $this->specs = [];
-        $this->suites = [];
-        $this->store = [];
+        $this->specs = array();
+        $this->suites = array();
+        $this->store = array();
         $this->parent = $parent;
     }
 
