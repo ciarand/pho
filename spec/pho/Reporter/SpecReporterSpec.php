@@ -7,41 +7,41 @@ use pho\Reporter\ReporterInterface;
 use pho\Console\Console;
 
 describe('SpecReporter', function() {
-    before(function() {
+    $console = null;
+    $spec = null;
+
+    before(function() use (&$console, &$spec) {
         $console = new Console(array(), 'php://output');
         $console->parseArguments();
-        $this->console = $console;
 
         $suite = new Suite('test', function(){});
         $spec = new Spec('testspec', function(){}, $suite);
-        $this->spec = $spec;
     });
 
-    it('implements the ReporterInterface', function() {
-        $reporter = new SpecReporter($this->console);
+    it('implements the ReporterInterface', function() use (&$console) {
+        $reporter = new SpecReporter($console);
         expect($reporter instanceof ReporterInterface)->toBeTrue();
     });
 
-    context('beforeSuite', function() {
-        before(function() {
-            $reporter = new SpecReporter($this->console);
-            $this->reporter = $reporter;
+    context('beforeSuite', function() use (&$console) {
+        $reporter = null;
+
+        before(function() use (&$console, &$reporter) {
+            $reporter = new SpecReporter($console);
         });
 
-        it('prints the suite title', function() {
-            $beforeSuite = function() {
+        it('prints the suite title', function() use (&$reporter) {
+            $beforeSuite = function() use (&$reporter) {
                 $suite = new Suite('test suite', function() {});
-                $reporter = $this->reporter;
                 $reporter->beforeSuite($suite);
             };
 
             expect($beforeSuite)->toPrint(PHP_EOL . "test suite" . PHP_EOL);
         });
 
-        it('pads nested suites', function() {
-            $beforeSuite = function() {
+        it('pads nested suites', function() use (&$reporter) {
+            $beforeSuite = function() use (&$reporter) {
                 $suite = new Suite('test suite', function() {});
-                $reporter = $this->reporter;
                 $reporter->beforeSuite($suite);
             };
 
@@ -49,59 +49,56 @@ describe('SpecReporter', function() {
         });
     });
 
-    context('beforeSpec', function() {
-        it('increments the spec count', function() {
-            $reporter = new SpecReporter($this->console);
+    context('beforeSpec', function() use (&$console, &$spec) {
+        it('increments the spec count', function() use (&$console, &$spec) {
+            $reporter = new SpecReporter($console);
 
             $countBefore = $reporter->getSpecCount();
-            $reporter->beforeSpec($this->spec);
+            $reporter->beforeSpec($spec);
             $countAfter = $reporter->getSpecCount();
 
             expect($countAfter)->toEqual($countBefore + 1);
         });
     });
 
-    context('afterSpec', function() {
-        it('prints the spec title in grey if it passed', function() {
-            $reporter = new SpecReporter($this->console);
-            $afterSpec = function() use ($reporter) {
-                $reporter->afterSpec($this->spec);
+    context('afterSpec', function() use (&$console, &$spec) {
+        it('prints the spec title in grey if it passed', function() use (&$console, &$spec) {
+            $reporter = new SpecReporter($console);
+            $afterSpec = function() use ($reporter, $spec) {
+                $reporter->afterSpec($spec);
             };
 
-            $console = $this->console;
-            $title = $this->console->formatter->grey($this->spec->getTitle());
+            $title = $console->formatter->grey($spec->getTitle());
             expect($afterSpec)->toPrint($title . PHP_EOL);
         });
 
-        it('prints the spec title in red if it failed', function() {
+        it('prints the spec title in red if it failed', function() use (&$console, &$spec) {
             $suite = new Suite('test', function(){});
             $spec = new Spec('testspec', function() {
                 throw new \Exception('test');
             }, $suite);
             $spec->run();
 
-            $afterSpec = function() use ($spec) {
-                $reporter = new SpecReporter($this->console);
+            $afterSpec = function() use ($console, $spec) {
+                $reporter = new SpecReporter($console);
                 $reporter->afterSpec($spec);
             };
 
-            $console = $this->console;
-            $specTitle = $console->formatter->red($this->spec->getTitle());
+            $specTitle = $console->formatter->red($spec->getTitle());
             expect($afterSpec)->toPrint($specTitle . PHP_EOL);
         });
 
-        it('prints the spec title in cyan if incomplete', function() {
+        it('prints the spec title in cyan if incomplete', function() use (&$console, $spec) {
             $suite = new Suite('test', function(){});
             $spec = new Spec('testspec', null, $suite);
             $spec->run();
 
-            $afterSpec = function() use ($spec) {
-                $reporter = new SpecReporter($this->console);
+            $afterSpec = function() use ($console, $spec) {
+                $reporter = new SpecReporter($console);
                 $reporter->afterSpec($spec);
             };
 
-            $console = $this->console;
-            $specTitle = $console->formatter->cyan($this->spec->getTitle());
+            $specTitle = $console->formatter->cyan($spec->getTitle());
             expect($afterSpec)->toPrint($specTitle . PHP_EOL);
         });
     });

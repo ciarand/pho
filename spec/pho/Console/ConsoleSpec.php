@@ -21,23 +21,24 @@ describe('Console', function() {
         });
 
         context('when the help flag is used', function() {
-            before(function() {
+            $printContents = null;
+            $console = null;
+
+            before(function() use (&$printContents, &$console) {
                 $console = new Console(array('--help'), 'php://output');
 
                 ob_start();
                 $console->parseArguments();
-                $this->printContents = ob_get_contents();
+                $printContents = ob_get_contents();
                 ob_end_clean();
-
-                $this->console = $console;
             });
 
-            it('sets the error status to 0', function() {
-                expect($this->console->getErrorStatus())->toEqual(0);
+            it('sets the error status to 0', function() use (&$console) {
+                expect($console->getErrorStatus())->toEqual(0);
             });
 
-            it('prints the option list and help', function() {
-                expect($this->printContents)
+            it('prints the option list and help', function() use (&$printContents) {
+                expect($printContents)
                     ->toContain('Usage: pho [options] [files]')
                     ->toContain('Options')
                     ->toContain('help');
@@ -45,67 +46,70 @@ describe('Console', function() {
         });
 
         context('when the version flag is used', function() {
-            before(function() {
+            $printContents = null;
+            $console = null;
+
+            before(function() use (&$printContents, &$console) {
                 $console = new Console(array('--version'), 'php://output');
 
                 ob_start();
                 $console->parseArguments();
-                $this->printContents = ob_get_contents();
+                $printContents = ob_get_contents();
                 ob_end_clean();
-
-                $this->console = $console;
             });
 
-            it('sets the error status to 0', function() {
-                expect($this->console->getErrorStatus())->toEqual(0);
+            it('sets the error status to 0', function() use (&$console) {
+                expect($console->getErrorStatus())->toEqual(0);
             });
 
-            it('prints version info', function() {
-                expect($this->printContents)
+            it('prints version info', function() use (&$printContents) {
+                expect($printContents)
                     ->toMatch('/pho version \d.\d.\d/');
             });
         });
 
         context('when an invalid option is passed', function() {
-            before(function() {
+            $printContents = null;
+            $console = null;
+
+            before(function() use (&$printContents, &$console) {
                 $console = new Console(array('--invalid'), 'php://output');
 
                 ob_start();
                 $console->parseArguments();
-                $this->printContents = ob_get_contents();
+                $printContents = ob_get_contents();
                 ob_end_clean();
-
-                $this->console = $console;
             });
 
-            it('sets the error status to 1', function() {
-                expect($this->console->getErrorStatus())->toEqual(1);
+            it('sets the error status to 1', function() use (&$console) {
+                expect($console->getErrorStatus())->toEqual(1);
             });
 
-            it('lists the invalid option', function() {
-                expect($this->printContents)
+            it('lists the invalid option', function() use (&$printContents) {
+                expect($printContents)
                     ->toEqual('--invalid is not a valid option' . PHP_EOL);
             });
         });
 
         context('when an invalid path is used', function() {
-            before(function() {
+            $printContents = null;
+            $console = null;
+
+            before(function() use (&$printContents, &$console) {
                 $console = new Console(array('./someinvalidpath'), 'php://output');
 
                 ob_start();
                 $console->parseArguments();
-                $this->printContents = ob_get_contents();
+                $printContents = ob_get_contents();
                 ob_end_clean();
-
-                $this->console = $console;
             });
 
-            it('sets the error status to 1', function() {
-                expect($this->console->getErrorStatus())->toEqual(1);
+            it('sets the error status to 1', function() use (&$console) {
+                expect($console->getErrorStatus())->toEqual(1);
             });
 
-            it('lists the invalid path', function() {
-                expect($this->printContents)->toEqual(
+            it('lists the invalid path', function() use (&$printContents) {
+                expect($printContents)->toEqual(
                     "The file or path \"./someinvalidpath\" doesn't exist" . PHP_EOL);
             });
         });
