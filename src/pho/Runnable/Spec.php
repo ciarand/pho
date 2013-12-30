@@ -29,8 +29,10 @@ class Spec extends Runnable
         $this->title = $title;
         $this->suite = $suite;
 
-        if ($closure) {
+        if ($closure && version_compare(PHP_VERSION, '5.4.0', '>=')) {
             $this->closure = $closure->bindTo($suite);
+        } else if ($closure) {
+            $this->closure = $closure;
         }
     }
 

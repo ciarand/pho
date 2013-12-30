@@ -32,7 +32,11 @@ class Suite
     public function __construct($title, \Closure $closure, Suite $parent = null)
     {
         $this->title = $title;
-        $this->closure = $closure->bindTo($this);
+        if (version_compare(PHP_VERSION, '5.4.0', ">=")) {
+            $this->closure = $closure->bindTo($this);
+        } else {
+            $this->closure = $closure;
+        }
         $this->specs = array();
         $this->suites = array();
         $this->store = array();

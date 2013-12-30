@@ -17,6 +17,10 @@ class Hook extends Runnable
     public function __construct(\Closure $closure, Suite $suite)
     {
         $this->suite = $suite;
-        $this->closure = $closure->bindTo($suite);
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+            $this->closure = $closure->bindTo($suite);
+        } else {
+            $this->closure = $closure;
+        }
     }
 }
