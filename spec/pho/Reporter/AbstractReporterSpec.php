@@ -23,36 +23,35 @@ class MockReporter extends AbstractReporter implements ReporterInterface
 }
 
 describe('AbstractReporter', function() {
-    $console = new Console([], 'php://output');
+    $console = new Console(array(), 'php://output');
     $console->parseArguments();
 
     $reporter = new MockReporter($console);
-    $this->reporter = $reporter;
+    $printContents = null;
 
-    context('afterRun', function() {
-        before(function() {
+    context('afterRun', function() use (&$reporter, &$printContents) {
+        before(function() use (&$reporter, &$printContents) {
             // Add a spec and run corresponding reporter hooks
-            $reporter = $this->reporter;
             $suite = new Suite('test', function(){});
             $spec = new Spec('testspec', function(){}, $suite);
             $reporter->beforeSpec($spec);
             $reporter->afterSpec($spec);
 
             ob_start();
-            $this->reporter->afterRun();
-            $this->printContents = ob_get_contents();
+            $reporter->afterRun();
+            $printContents = ob_get_contents();
             ob_end_clean();
         });
 
-        it('prints the running time', function() {
+        it('prints the running time', function() use (&$printContents) {
             // TODO: Update once pattern matching is added
-            $print = $this->printContents;
+            $print = $printContents;
             expect($print)->toContain('Finished in');
             expect($print)->toContain('seconds');
         });
 
-        it('prints the number of specs and failures', function() {
-            expect($this->printContents)->toContain('1 spec, 0 failures');
+        it('prints the number of specs and failures', function() use (&$printContents) {
+            expect($printContents)->toContain('1 spec, 0 failures');
         });
     });
 });

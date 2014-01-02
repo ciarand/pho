@@ -23,7 +23,7 @@ describe('LooseEqualityMatcher', function() {
         it('returns false if not loosely equal', function() {
             $matcher = new LooseEqualityMatcher(false);
 
-            if ($matcher->match(['a', 'b'])) {
+            if ($matcher->match(array('a', 'b'))) {
                 throw new \Exception('Does not return false');
             }
         });

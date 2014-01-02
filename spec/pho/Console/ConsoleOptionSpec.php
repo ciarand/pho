@@ -3,12 +3,12 @@
 use pho\Console\ConsoleOption;
 
 describe('ConsoleOption', function() {
-    $optInfo = [
+    $optInfo = array(
         'longName'     => 'testLongName',
         'shortName'    => 'testShortName',
         'description'  => 'testDescription',
         'argumentName' => 'testArgumentName',
-    ];
+    );
 
     $option = new ConsoleOption($optInfo['longName'], $optInfo['shortName'],
         $optInfo['description'], $optInfo['argumentName']);

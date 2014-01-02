@@ -18,9 +18,9 @@ class ConsoleOptionParser
      */
     public function __construct()
     {
-        $this->options = [];
-        $this->paths = [];
-        $this->invalidArguments = [];
+        $this->options = array();
+        $this->paths = array();
+        $this->invalidArguments = array();
     }
 
     /**
@@ -54,7 +54,7 @@ class ConsoleOptionParser
      */
     public function getOptions()
     {
-        $options = [];
+        $options = array();
         foreach ($this->options as $name => $option) {
             $options[$name] = $option->getValue();
         }
@@ -90,7 +90,7 @@ class ConsoleOptionParser
      */
     public function getOptionNames()
     {
-        $names = [];
+        $names = array();
         foreach ($this->options as $option) {
             $names[] = $option->getLongName();
             $names[] = $option->getShortName();

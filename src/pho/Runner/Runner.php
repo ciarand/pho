@@ -16,7 +16,7 @@ class Runner
 
     private $reporter;
 
-    private $suites = [];
+    private $suites = array();
 
     private $current;
 
@@ -154,16 +154,17 @@ class Runner
         $watcher = new Watcher();
         $watcher->watchPath(getcwd());
 
-        $watcher->addListener(function() {
-            $paths = implode(' ', self::$console->getPaths());
-            $descriptor = [
-                0 => ['pipe', 'r'],
-                1 => ['pipe', 'w']
-            ];
+        $class = get_class();
+        $watcher->addListener(function() use ($class) {
+            $paths = implode(' ', $class::$console->getPaths());
+            $descriptor = array(
+                0 => array('pipe', 'r'),
+                1 => array('pipe', 'w')
+            );
 
             // Rebuild option string, without watch
             $optionString = '';
-            foreach (self::$console->options as $key => $val) {
+            foreach ($class::$console->options as $key => $val) {
                 if ($key == 'watch') {
                     continue;
                 } elseif ($val === true) { // test
@@ -178,7 +179,7 @@ class Runner
 
             if (is_resource($process)) {
                 while ($buffer = fread($pipes[1], 16)) {
-                    self::$console->write($buffer);
+                    $class::$console->write($buffer);
                 }
 
                 fclose($pipes[0]);

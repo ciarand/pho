@@ -7,39 +7,35 @@ use pho\Reporter\ReporterInterface;
 use pho\Console\Console;
 
 describe('DotReporter', function() {
-    before(function() {
-        $console = new Console([], 'php://output');
+    $console = null;
+    $reporter = null;
+    $spec = null;
+
+    before(function() use (&$console, &$reporter, &$spec) {
+        $console = new Console(array(), 'php://output');
         $console->parseArguments();
-        $this->console = $console;
 
         $reporter = new DotReporter($console);
-        $this->reporter = $reporter;
 
         $suite = new Suite('test', function(){});
         $spec = new Spec('testspec', function(){}, $suite);
-        $this->spec = $spec;
     });
 
-    it('implements the ReporterInterface', function() {
-        expect($this->reporter instanceof ReporterInterface)->toBeTrue();
+    it('implements the ReporterInterface', function() use (&$reporter) {
+        expect($reporter instanceof ReporterInterface)->toBeTrue();
     });
 
-    context('beforeSpec', function() {
-        it('increments the spec count', function() {
-            $reporter = $this->reporter;
-
+    context('beforeSpec', function() use (&$reporter, &$spec) {
+        it('increments the spec count', function() use (&$reporter, &$spec) {
             $countBefore = $reporter->getSpecCount();
-            $reporter->beforeSpec($this->spec);
+            $reporter->beforeSpec($spec);
             $countAfter = $reporter->getSpecCount();
 
             expect($countAfter)->toEqual($countBefore + 1);
         });
 
-        it('prints a newline after a limit', function() {
-            $print = function() {
-                $reporter = $this->reporter;
-                $spec = $this->spec;
-
+        it('prints a newline after a limit', function() use (&$reporter, &$spec) {
+            $print = function() use ($reporter, $spec) {
                 for ($i = 0; $i <= 60; $i++) {
                     $reporter->beforeSpec($spec);
                     $reporter->afterSpec($spec);
@@ -53,41 +49,38 @@ describe('DotReporter', function() {
         });
     });
 
-    context('afterSpec', function() {
-        it('prints a dot if the spec passed', function() {
-            $reporter = $this->reporter;
-            $afterSpec = function() {
-                $this->reporter->afterSpec($this->spec);
+    context('afterSpec', function() use (&$console, &$reporter, &$spec) {
+        it('prints a dot if the spec passed', function() use (&$reporter, &$spec) {
+            $afterSpec = function() use ($reporter, $spec) {
+                $reporter->afterSpec($spec);
             };
 
             expect($afterSpec)->toPrint('.');
         });
 
-        it('prints an F in red if a spec failed', function() {
+        it('prints an F in red if a spec failed', function() use (&$console, &$reporter) {
             $suite = new Suite('test', function(){});
             $spec = new Spec('testspec', function() {
                 throw new \Exception('test');
             }, $suite);
             $spec->run();
 
-            $afterSpec = function() use ($spec) {
-                $this->reporter->afterSpec($spec);
+            $afterSpec = function() use ($spec, $reporter) {
+                $reporter->afterSpec($spec);
             };
 
-            $console = $this->console;
             expect($afterSpec)->toPrint($console->formatter->red('F'));
         });
 
-        it('prints an I in cyan if incomplete', function() {
+        it('prints an I in cyan if incomplete', function() use (&$console, &$reporter) {
             $suite = new Suite('test', function(){});
             $spec = new Spec('testspec', null, $suite);
             $spec->run();
 
-            $afterSpec = function() use ($spec) {
-                $this->reporter->afterSpec($spec);
+            $afterSpec = function() use ($reporter, $spec) {
+                $reporter->afterSpec($spec);
             };
 
-            $console = $this->console;
             expect($afterSpec)->toPrint($console->formatter->cyan('I'));
         });
     });

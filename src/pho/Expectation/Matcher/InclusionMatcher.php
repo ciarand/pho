@@ -40,8 +40,8 @@ class InclusionMatcher extends AbstractMatcher implements MatcherInterface
      */
     public function match($haystack)
     {
-        $this->found = [];
-        $this->missing = [];
+        $this->found = array();
+        $this->missing = array();
 
         if (!is_string($haystack) && !is_array($haystack)) {
             throw new \InvalidArgumentException('Argument must be an array or string');

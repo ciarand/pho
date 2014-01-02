@@ -6,7 +6,7 @@ use pho\Exception\Exception;
 
 class ErrorException extends Exception
 {
-    private static $errorConstants = [
+    private static $errorConstants = array(
         E_ERROR             => 'E_ERROR',
         E_WARNING           => 'E_WARNING',
         E_PARSE             => 'E_PARSE',
@@ -22,7 +22,7 @@ class ErrorException extends Exception
         E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
         E_DEPRECATED        => 'E_DEPRECATED',
         E_USER_DEPRECATED   => 'E_USER_DEPRECATED'
-    ];
+    );
 
     /**
      * Creates an ErrorException, given the same parameters used by an error

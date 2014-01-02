@@ -29,14 +29,14 @@ describe('LengthMatcher', function() {
 
         it('returns true if the array has the expected length', function() {
             $matcher = new LengthMatcher(2);
-            if (!$matcher->match(['a', 'b'])) {
+            if (!$matcher->match(array('a', 'b'))) {
                 throw new \Exception('Does not return true');
             }
         });
 
         it("returns false if the array doesn't have the expected length", function() {
             $matcher = new LengthMatcher(3);
-            if ($matcher->match(['a', 'b'])) {
+            if ($matcher->match(array('a', 'b'))) {
                 throw new \Exception('Does not return false');
             }
         });
@@ -69,7 +69,7 @@ describe('LengthMatcher', function() {
 
         it('lists the expected length with inversed logic', function() {
             $matcher = new LengthMatcher(3);
-            $matcher->match(['a', 'b', 'c']);
+            $matcher->match(array('a', 'b', 'c'));
             $expected = 'Expected array not to have a length of 3';
 
             if ($expected !== $matcher->getFailureMessage(true)) {

@@ -4,19 +4,19 @@ namespace pho\Console;
 
 class ConsoleFormatter
 {
-    private static $foregroundColours = [
-        'black' => ["\033[30m", "\033[0m"],
-        'grey'  => ["\033[90m", "\033[0m"],
-        'red'   => ["\033[31m", "\033[0m"],
-        'green' => ["\033[32m", "\033[0m"],
-        'cyan'  => ["\033[36m", "\033[0m"],
-        'white' => ["\033[37m", "\033[0m"],
-    ];
+    private static $foregroundColours = array(
+        'black' => array("\033[30m", "\033[0m"),
+        'grey'  => array("\033[90m", "\033[0m"),
+        'red'   => array("\033[31m", "\033[0m"),
+        'green' => array("\033[32m", "\033[0m"),
+        'cyan'  => array("\033[36m", "\033[0m"),
+        'white' => array("\033[37m", "\033[0m"),
+    );
 
-    private static $styles = [
-        'bold'   => ["\x1b[1m", "\x1b[22m"],
-        'italic' => ["\x1b[3m", "\x1b[23m"],
-    ];
+    private static $styles = array(
+        'bold'   => array("\x1b[1m", "\x1b[22m"),
+        'italic' => array("\x1b[3m", "\x1b[23m"),
+    );
 
     /**
      * Given a multidimensional array, formats the text such that each entry
@@ -31,7 +31,7 @@ class ConsoleFormatter
     public function alignText($array, $delimiter = '')
     {
         // Get max column widths
-        $widths = [];
+        $widths = array();
         foreach ($array as $row) {
             $lengths = array_map('strlen', $row);
 
@@ -45,9 +45,9 @@ class ConsoleFormatter
         }
 
         // Pad lines columns and return an array
-        $output = [];
+        $output = array();
         foreach($array as $row) {
-            $entries = [];
+            $entries = array();
             for ($i = 0; $i < count($row); $i++) {
                 $entries[] = str_pad($row[$i], $widths[$i]);
             }
