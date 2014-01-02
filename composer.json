@@ -1,16 +1,20 @@
 {
-    "name": "danielstjules/pho",
-    "description": "A BDD testing framework",
+    "name": "ciarand/pho",
+    "description": "A fork of the BDD testing framework",
     "keywords": [
         "bdd", "behavior driven development", "framework", "pho", "test", "unit"
     ],
-    "homepage": "https://github.com/danielstjules/pho",
+    "homepage": "https://github.com/ciarand/pho",
     "license": "MIT",
     "authors": [
         {
             "name": "Daniel St. Jules",
             "email": "danielst.jules@gmail.com",
             "homepage": "http://www.danielstjules.com"
+        },
+        {
+            "name": "Ciaran Downey",
+            "homepage": "http://github.com/ciarand"
         }
     ],
     "require": {
