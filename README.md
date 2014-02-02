@@ -3,7 +3,7 @@
 BDD test framework for PHP, inspired by Jasmine and RSpec. Work in progress.
 Feature requests and pull requests welcome!
 
-[![Build Status](https://travis-ci.org/danielstjules/pho.png)](https://travis-ci.org/danielstjules/pho)
+[![Build Status](https://travis-ci.org/ciarand/pho.png)](https://travis-ci.org/ciarand/pho)
 
  * [Installation](#installation)
  * [Writing Specs](#writing-specs)
